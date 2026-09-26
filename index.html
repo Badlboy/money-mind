@@ -41,8 +41,10 @@
   }
   *{box-sizing:border-box}
   body{margin:0;background:#EFE7DD;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-  .page{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 60px;display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:40px;align-items:start}
-  @media (max-width:900px){.page{grid-template-columns:1fr;gap:28px}}
+  body{transition:background-color .6s}
+  html.is-prem body{background:#141216}
+  .page{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px 20px}
+  .page>div{width:100%;display:flex;justify-content:center}
 
   /* ── панель поруч ── */
   .side{display:flex;flex-direction:column;gap:18px;position:sticky;top:20px}
@@ -70,7 +72,7 @@
   button:focus-visible,[data-go]:focus-visible,[data-act]:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 
   /* ══════ ТЕЛЕФОН · iPhone Air 420×912 ══════ */
-  .po{container-type:inline-size;width:100%;max-width:440px;margin-inline:auto}
+  .po{container-type:inline-size;width:100%;max-width:min(440px,calc((100vh - 48px) / 2.104));max-width:min(440px,calc((100dvh - 48px) / 2.104));margin-inline:auto}
   .ph{background:#1E1B18;border-radius:calc(100cqw*68/444);padding:calc(100cqw*11/444);box-shadow:0 0 0 calc(100cqw*2/444) #3A342E,0 18px 40px -18px rgba(40,28,16,.35)}
   .sc{position:relative;background:var(--page);transition:background-color .5s;border-radius:calc(100cqw*57/444);overflow:hidden;aspect-ratio:420/912;display:flex;flex-direction:column;font-size:calc(100cqw/27.75);line-height:1.4;color:var(--ink)}
   .sc{font-family:var(--ui)}
@@ -264,7 +266,8 @@
     html.is-prem body{background:#0B0B0D}
     .page{display:block;max-width:none;padding:0}
     .side{display:none}
-    .po{max-width:none}
+    .po{max-width:none!important}
+    .page{display:block;min-height:0;padding:0}
     .ph{border-radius:0;padding:0;box-shadow:none;background:transparent}
     .sc{border-radius:0;aspect-ratio:auto;height:100vh;height:100dvh;padding-top:env(safe-area-inset-top,0px)}
     .isl,.st,.home{display:none}
@@ -300,63 +303,7 @@
     </div></div></div>
   </div>
 
-  <!-- ══════ ПАНЕЛЬ ══════ -->
-  <aside class="side">
-    <div>
-      <p class="eyebrow">Money Mind · клікабельний телефон · iPhone Air</p>
-      <h1>Натискайте — усе живе</h1>
-      <p class="lead">Ваш макет, ваші кольори й ваш поділ FREE / PREMIUM. У FREE телефон світлий, у Premium — темний, у системі FLOW. Цифри не намальовані: кожен екран рахує їх з тих самих записів, тому одна дія змінює все, що від неї залежить.</p>
-    </div>
-
-    <div class="box">
-      <h2>Тариф</h2>
-      <div class="modes" role="group" aria-label="Тариф">
-        <button id="mFree" aria-pressed="true">FREE · $0</button>
-        <button id="mPrem" class="pm" aria-pressed="false">PREMIUM · $20</button>
-      </div>
-      <div class="ctl">
-        <button id="cOnb">Показати екран входу</button>
-        <button id="cReset">Скинути всі зміни</button>
-      </div>
-    </div>
-
-    <div class="box">
-      <h2>Спробуйте звʼязки</h2>
-      <ol class="tries">
-        <li><span class="n">1</span><span><b>Внесіть витрату</b> кнопкою «+» — зміняться баланс, витрати місяця, бюджет, аналітика, а в Premium ще й чистий капітал і ціль «Капітал».</span></li>
-        <li><span class="n">2</span><span><b>У FREE натисніть «Бюджет» чи «Цілі»</b> — відкриється екран Premium. «Спробувати 7 днів» вмикає тариф.</span></li>
-        <li><span class="n">3</span><span><b>Ще → Підключення банків</b> — після «підключення» операції зʼявляться з позначкою «з банку» й одразу потраплять у бюджет.</span></li>
-        <li><span class="n">4</span><span><b>Ще → AI-асистент</b> — відповіді зібрані з ваших поточних цифр, тож після нової витрати вони інші.</span></li>
-        <li><span class="n">5</span><span><b>Цілі → ціль → «Поповнити»</b> — прогрес і прогноз перераховуються.</span></li>
-        <li><span class="n">6</span><span><b>Бюджет → категорія</b> — змініть ліміт, і відсоток у бюджеті та на Головній зміниться.</span></li>
-      </ol>
-    </div>
-
-    <div class="box">
-      <h2>Що в рамці справжнє, а що ні</h2>
-      <ul>
-        <li><span class="t-real">справжнє</span> <b>Арифметика.</b> Баланс, витрати, бюджет, аналітика, чистий капітал, прогрес цілей і прогнози рахуються з тих самих записів у копійках, без дробових чисел.</li>
-        <li><span class="t-real">справжнє</span> <b>Поділ FREE / PREMIUM</b> — з вашого фото, пункт у пункт.</li>
-        <li><span class="t-real">справжнє</span> <b>Кольори FREE</b> — піпеткою з вашого макета MONEY MIND. <b>Кольори Premium</b> — з дизайн-системи FLOW: чорний #0B0B0D, фіолетовий #462CF4, золото #D6B878, шрифт Inter. Зелений і червоний для тексту трохи висвітлено, бо з палітри FLOW дрібні цифри на чорному читаються погано.</li>
-        <li><span class="t-fake">несправжнє</span> <b>Банки не підключаються.</b> «Підключення» — імітація з готовими операціями. Справжнє потребує авторизації НБУ.</li>
-        <li><span class="t-fake">несправжнє</span> <b>AI — не мовна модель.</b> Відповіді зібрані за правилами з ваших цифр.</li>
-        <li><span class="t-fake">несправжнє</span> <b>Оплати немає.</b> «Спробувати 7 днів» просто перемикає тариф.</li>
-        <li><span class="t-fake">несправжнє</span> <b>Немає сервера.</b> Зміни зберігаються тільки у вашому браузері; «Скинути всі зміни» повертає приклад.</li>
-        <li><span class="t-fake">несправжнє</span> <b>Імʼя й суми вигадані.</b> Курс ₴ — приклад, 41,50 за $1.</li>
-      </ul>
-    </div>
-
-    <div class="box">
-      <h2>Що далі — незроблене поіменно</h2>
-      <ul>
-        <li><b>Мої рішення, які треба підтвердити:</b> у FREE не більше трьох рахунків (у вашому фото «обмежена кількість» без числа); «Точка А» у FREE — лише рахунки мінус борги, а повний чистий капітал із нерухомістю й авто — Premium.</li>
-        <li><b>Check-up</b> намальовано як заявку експерту зі згодою на доступ. Чи це автоматичний звіт — не вирішено (ADR-0007).</li>
-        <li>Немає кабінету на ПК і CRM — ви попросили тільки телефон.</li>
-        <li>Екрани безпеки (PIN, біометрія), сповіщень і мови в «Профілі» показані рядками, без власних екранів.</li>
-        <li>Критик цю сторінку ще не ламав.</li>
-      </ul>
-    </div>
-  </aside>
+  
 </div>
 
 <script>
@@ -745,7 +692,6 @@
     if(S.premium) h+='<button class="btn q" data-act="cancelprem">Скасувати Premium (дані лишаться)</button>';
     h+='<button class="btn q" data-act="logout">Вийти</button>';
     h+='<button class="btn q" data-act="resetdemo">Скинути демо-дані</button>';
-    h+='<p class="note">Демо-прототип. Нічого не надсилається: усе, що ви вносите, лишається тільки в цьому браузері. Імʼя й суми вигадані.</p>';
     return h;
   };
 
@@ -932,19 +878,11 @@
     }
   });
 
-  /* ── панель поруч ── */
-  var mFree=document.getElementById("mFree"), mPrem=document.getElementById("mPrem");
-  function syncModes(){ mFree.setAttribute("aria-pressed",String(!S.premium)); mPrem.setAttribute("aria-pressed",String(S.premium)); }
-  mFree.addEventListener("click",function(){ if(!S.premium) return; closeSheet(); switchTier(false,function(){ if(S.screen==="paywall"||(PREM_SCREENS[S.screen]&&S.screen!=="budget"&&S.screen!=="goals")){S.stack=[];S.screen="home";} }); });
-  mPrem.addEventListener("click",function(){ if(S.premium) return; closeSheet(); switchTier(true,function(){ if(S.screen==="paywall"){ if(S.after){S.screen=S.after.s;param=S.after.p;S.after=null;} else {S.stack=[];S.screen="home";} } }); });
-  document.getElementById("cOnb").addEventListener("click",function(){ closeSheet(); S.stack=[]; S.screen="onb"; render(); save(); });
-  document.getElementById("cReset").addEventListener("click",function(){ closeSheet(); S=seed(); V._q=""; V._at="a"; V._ck=null; param=null; try{localStorage.removeItem(STORE);}catch(e){} render(); toast("Усе повернуто до прикладу"); });
+  function syncModes(){}
   document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&sheet.classList.contains("show")){closeSheet();} });
 
   load(); if(S.screen==="paywall"||S.screen==="goal"){S.screen="home";S.stack=[];} param=null; render();
-  var mob=false; try{ mob=window.matchMedia("(max-width:600px)").matches; }catch(e){}
-  var seen=false; try{ seen=localStorage.getItem("mm-seen")==="1"; }catch(e){}
-  if(mob && !seen){ setTimeout(function(){ openSheet('<span class="h3">Це демо Money Mind</span><p class="sm mut" style="margin:0">Прототип, щоб подивитись і понатискати. <b style="color:var(--ink)">Нічого не надсилається</b> — усе, що ви вносите, лишається тільки на цьому телефоні. Імʼя й суми вигадані, банки й оплата — імітація.</p><p class="xs mut" style="margin:0">Щоб відкривати як застосунок: «Поділитися» → «На екран Додому».</p><button class="btn" data-act="seen">Зрозуміло</button>'); }, 450); }
+  
 })();
 </script>
 
