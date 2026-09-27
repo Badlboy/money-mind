@@ -242,6 +242,28 @@
   .pw li i{width:1.3em;height:1.3em;border-radius:50%;border:.1em solid #D6B878;display:flex;align-items:center;justify-content:center;color:#D6B878}
   .pw li i svg{width:.8em;height:.8em}
   .pw .fine{font-size:.64em;color:#6F6D70;text-align:center;line-height:1.45}
+  .wel{padding:4.2em 1.15em 2em;display:flex;flex-direction:column;gap:.75em}
+  .wel .h1w{font-size:1.45em;font-weight:800;letter-spacing:-.02em;line-height:1.12}
+  .wel .vid{height:10.5em;border-radius:1.2em;background:linear-gradient(160deg,#D4BCA0,#8C7462);position:relative;display:flex;align-items:flex-end;padding:.8em;color:#fff}
+  .wel .vid .play{position:absolute;top:50%;left:50%;width:3.2em;height:3.2em;margin:-2.1em 0 0 -1.6em;border-radius:50%;background:#fff;color:#181818;display:flex;align-items:center;justify-content:center}
+  .wel .vid .play svg{width:1.2em;height:1.2em}
+  .wel .fine{font-size:.62em;color:var(--ink3);text-align:center;line-height:1.45;margin:0}
+  .tiers{display:flex;flex-direction:column;gap:.5em}
+  .tier{border:1px solid var(--line);border-radius:1em;padding:.75em .9em;display:flex;flex-direction:column;gap:.3em;background:var(--white)}
+  .tier.pd{background:#0B0B0D;color:#F5F2EC;border-color:#2E2E33}
+  .tier.px{border:1.5px solid #D6B878;background:#FFFBF2}
+  .tier .tt{display:flex;justify-content:space-between;font-weight:800;font-size:.86em}
+  .tier .td{font-size:.66em;opacity:.8;line-height:1.4}
+  .qrow{display:grid;grid-template-columns:1fr 6.5em;gap:.6em;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:1em;padding:.55em .8em}
+  .qrow label{font-size:.82em;font-weight:600}
+  .qrow input{font:inherit;font-size:16px;font-weight:800;text-align:right;border:0;background:transparent;color:var(--ink);width:100%}
+  .pw .tr{border:1px solid #2E2E33;border-radius:1em;padding:.8em .9em;display:flex;flex-direction:column;gap:.4em;background:#141216}
+  .pw .tr.x{border-color:#D6B878}
+  .pw .tr .tt{display:flex;justify-content:space-between;font-weight:800;font-size:.9em;color:#F5F2EC}
+  .pw .tr .td{font-size:.66em;color:#A7A5A5;line-height:1.4}
+  .pw .btn.o2{background:transparent;border:1px solid #D6B878;color:#D6B878}
+  .mt{display:flex;flex-direction:column;gap:.2em}
+  .mt .row b.ok{color:var(--pos)} .mt .row b.warn{color:#B07A12} .mt .row b.bad{color:var(--neg)}
   .pw .glow{height:9em;border-radius:1.2em;background:radial-gradient(circle at 78% 18%,#6A57FF 0%,#2B1E8C 32%,#141216 72%,#0B0B0D 100%);display:flex;align-items:flex-end;padding:1em;box-shadow:0 0 0 1px #2E2E33 inset}
   /* розкриття Premium: одна анімація, одна часова шкала */
   .reveal{position:absolute;inset:0;z-index:60;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5em;background:#0B0B0D;clip-path:circle(0% at 50% 92%);opacity:0}
@@ -283,8 +305,6 @@
   }
 </style>
 
-</head>
-<body>
 <div class="page">
   <!-- ══════ ТЕЛЕФОН ══════ -->
   <div>
@@ -309,7 +329,7 @@
 <script>
 (function(){
   "use strict";
-  var STORE = "mm-phone-v6";
+  var STORE = "mm-phone-v7";
   var RATE = 4150; // ₴ за $1 × 100 — приклад курсу
   var MONTH = "2026-09";
 
@@ -362,7 +382,7 @@
   function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return "rgba("+(n>>16&255)+","+(n>>8&255)+","+(n&255)+","+a+")"; }
   function catStyle(c){ var k=CATS[c]; return S&&S.premium ? "background:"+rgba(donut(c),.18)+";color:"+donut(c) : "background:"+k.c+";color:"+k.t; }
 
-  var PREMIUM_LIST = ["Підключення банків","Автоматичне завантаження транзакцій","Автоматична категоризація","Бюджет","План / факт","Фінансовий план на рік","Фінансові цілі","Активи й зобовʼязання","Чистий капітал","Фінансовий check-up","Прогноз досягнення цілей","AI-асистент","Розширена аналітика","Синхронізація між пристроями"];
+  var PREMIUM_LIST = ["Прогноз, коли ви досягнете цілей","План виходу з боргів","Автоматичний фінансовий check-up","Підключення банків і автоімпорт","Автоматична категоризація","Бюджет і план / факт","Фінансовий план на рік","Фінансові цілі","AI-асистент","Розширена аналітика","Синхронізація й кабінет на ПК"];
   var FREE_ACC_LIMIT = 3;
 
   /* ── приклад даних: усе в центах ── */
@@ -379,7 +399,7 @@
       ["Подарунок мамі","in","mono",-23000,15,"m"],["Аптека","in","cash",-9000,18,"m"],["Одяг","in","mono",-31000,22,"m"]
     ].map(function(o,i){return {id:"s"+i,t:o[0],c:o[1],a:o[2],v:o[3],d:d(o[4]),src:o[5]};});
     return {
-      v:4, premium:false, cur:"USD", screen:"home", stack:[],
+      v:5, premium:false, expert:false, cur:"USD", screen:"onb", stack:[],
       accounts:[
         {id:"mono",n:"monobank",k:"Картка · UAH",bal:1446000},
         {id:"wise",n:"Wise",k:"Рахунок · USD",bal:1200000},
@@ -389,7 +409,7 @@
       ops:ops,
       limits:{zh:100000,yi:50000,tr:40000,kr:30000,vi:30000,pi:15000,in:60000},
       assets:[{n:"Нерухомість",v:6000000,i:"home"},{n:"Інвестиції",v:2500000,i:"chart"},{n:"Автомобіль",v:1100000,i:"car"},{n:"Інше",v:2054000,i:"other"}],
-      liabs:[{n:"Кредит на авто",v:1240000},{n:"Кредитна картка",v:120000},{n:"Борг сестрі",v:600000}],
+      liabs:[{n:"Кредит на авто",v:1240000,pay:0},{n:"Кредитна картка",v:120000,pay:0},{n:"Борг сестрі",v:600000,pay:0}],
       goals:[
         {id:"cap",n:"Капітал $ 200 000",target:20000000,auto:true,g:"linear-gradient(135deg,#C9B8A2,#8C7462)"},
         {id:"cush",n:"Фінансова подушка",target:1000000,have:300000,monthly:100000,g:"linear-gradient(135deg,#E5D5C3,#B9A58F)"},
@@ -404,7 +424,7 @@
 
   var S;
   function load(){
-    try{var raw=localStorage.getItem(STORE); if(raw){var o=JSON.parse(raw); if(o&&o.v===4){S=o;return;}}}catch(e){}
+    try{var raw=localStorage.getItem(STORE); if(raw){var o=JSON.parse(raw); if(o&&o.v===5){S=o;return;}}}catch(e){}
     S=seed();
   }
   function save(){try{localStorage.setItem(STORE,JSON.stringify(S));}catch(e){}}
@@ -420,6 +440,26 @@
   function netWorth(){return assetsTotal()-liabsTotal();}
   function limitTotal(){return CAT_ORDER.reduce(function(s,c){return s+S.limits[c];},0);}
   function goalHave(g){return g.auto?netWorth():g.have;}
+  /* середні накопичення за 6 місяців: 5 місяців історії + поточний (ADR-0010) */
+  function avgSav(){ var ms=["2026-04","2026-05","2026-06","2026-07","2026-08"], t=0; ms.forEach(function(m){t+=S.history[m][0]-S.history[m][1];}); t+=income()-expense(); return Math.round(t/6); }
+  function goalMonthly(g){ return g.auto?avgSav():g.monthly; }
+  /* план боргів: від найменшого залишку; уся сума платежів іде на найменший борг; без відсотків */
+  function debtPlan(){
+    var ds=S.liabs.map(function(l,i){return {i:i,n:l.n,b:l.v,p:l.pay||0};}).sort(function(a,b){return a.b-b.b;});
+    var total=ds.reduce(function(x,d){return x+d.p;},0), cum=0;
+    ds.forEach(function(d){ cum+=d.b; d.m = total>0 ? Math.ceil(cum/total) : null; });
+    return {order:ds,total:total,months: total>0 ? Math.ceil(liabsTotal()/total) : null};
+  }
+  function metrics(){
+    var exp=expense(), inc=income(), cush=S.goals.filter(function(g){return g.id==="cush";})[0];
+    var cm=exp? Math.round(cush.have*10/exp)/10 : 0, sr=pct(inc-exp,inc), dl=pct(liabsTotal(),assetsTotal()), bp=pct(exp,limitTotal());
+    return [
+      {n:"Фінансова подушка",v:String(cm).replace(".",",")+" міс",s:cm>=3?"ok":"bad",d:money(cush.have)+" при витратах "+money(exp)+" на місяць · орієнтир 3–6 міс"},
+      {n:"Норма заощаджень",v:sr+" %",s:sr>=10?"ok":"warn",d:money(inc-exp)+" з доходу "+money(inc)},
+      {n:"Борги до активів",v:dl+" %",s:dl<=30?"ok":"warn",d:money(liabsTotal())+" / "+money(assetsTotal())},
+      {n:"Бюджет місяця",v:bp+" %",s:bp>100?"bad":(bp>=90?"warn":"ok"),d:money(exp)+" із "+money(limitTotal())}
+    ];
+  }
   function pct(a,b){return b?Math.round(a*100/b):0;}
   function planExp(m){ return m===MONTH ? limitTotal() : (S.plan.exp[m]||300000); }
   function planExpYear(){ var t=0; for(var i=1;i<=12;i++){ t+=planExp("2026-"+(i<10?"0":"")+i); } return t; }
@@ -445,8 +485,8 @@
 
   /* ── навігація ── */
   var TABS=[["home","Головна","home"],["ops","Операції","list"],["budget","Бюджет","pie"],["goals","Цілі","target"],["more","Ще","dots"]];
-  var PREM_SCREENS={budget:1,goals:1,goal:1,analytics:1,assets:1,plan:1,ai:1,banks:1,checkup:1};
-  var TITLES={ops:"Операції",budget:"Бюджет",goals:"Фінансові цілі",more:"Ще",analytics:"Аналітика",assets:"Активи та зобовʼязання",plan:"Фінплан на рік",ai:"AI-асистент",banks:"Підключення банків",checkup:"Фінансовий check-up",profile:"Профіль",tochka:"Фінансова точка А",goal:"Ціль"};
+  var PREM_SCREENS={budget:1,goals:1,goal:1,analytics:1,plan:1,ai:1,banks:1,checkup:1,debts:1};
+  var TITLES={ops:"Операції",budget:"Бюджет",goals:"Фінансові цілі",more:"Ще",analytics:"Аналітика",assets:"Активи та зобовʼязання",plan:"Фінплан на рік",ai:"AI-асистент",banks:"Підключення банків",checkup:"Фінансовий check-up",profile:"Профіль",tochka:"Фінансова точка А",goal:"Ціль",debts:"План виходу з боргів"};
   var param=null;
 
   function go(scr,p,opts){
@@ -480,17 +520,29 @@
     var h='<div class="row"><div><div class="hello">Доброго дня,</div><div class="name">Олена</div></div><button class="ava" data-go="profile" aria-label="Профіль">О</button></div>'
      +'<div class="w"><div class="row"><span class="wl">Загальний баланс · '+S.accounts.length+' '+accWord(S.accounts.length)+'</span><button class="cur" data-act="cur">'+(S.cur==="USD"?"USD":"UAH")+' ⇄</button></div><span class="big">'+money(balance())+'</span><div class="row"><span class="sm pos b">'+money(sav,{sign:true})+' накопичено за вересень</span>'+spark("currentColor")+'</div></div>'
      +'<div class="k3"><div class="w click" data-go="ops" data-p="in"><span class="xs mut">Дохід</span><span class="mid pos">'+money(inc)+'</span></div><div class="w click" data-go="ops" data-p="out"><span class="xs mut">Витрати</span><span class="mid neg">'+money(exp)+'</span></div><div class="w" style="background:var(--sav-bg);border-color:var(--sav-bd)"><span class="xs mut">Накопичення</span><span class="mid" style="color:var(--sav-fg)">'+money(sav)+'</span></div></div>';
+    h+='<div class="w nw click" data-go="assets"><span class="wl">Чистий капітал · активи мінус зобовʼязання'+(S.premium?'':' · у FREE')+'</span><div class="row"><span class="big" style="color:#fff">'+money(netWorth())+'</span>'+spark("#fff")+'</div><span class="xs" style="color:var(--nw-sub)">'+money(assetsTotal())+' − '+money(liabsTotal())+'</span></div>';
     if(S.premium){
-      h+='<div class="w nw click" data-go="assets"><span class="wl">Чистий капітал · активи мінус зобовʼязання</span><div class="row"><span class="big" style="color:#fff">'+money(netWorth())+'</span>'+spark("#fff")+'</div><span class="xs" style="color:var(--nw-sub)">'+money(assetsTotal())+' − '+money(liabsTotal())+'</span></div>';
+      h+=forecastCard();
       h+='<div class="w click" data-go="budget">'+planInner+'</div>';
+      var dp=debtPlan();
+      h+='<div class="w click" data-go="debts"><span class="wl">План виходу з боргів</span><span class="sm">'+dp.order.map(function(d,i){return (i+1)+'. '+esc(d.n);}).join(" → ")+'</span><span class="xs mut">'+(dp.months===null?'Внесіть щомісячні платежі — покажемо дату':'Без боргів ≈ '+monthName(dp.months))+'</span></div>';
+      var mt=metrics(), okc=mt.filter(function(x){return x.s==="ok";}).length;
+      h+='<div class="w click" data-go="checkup"><div class="row"><span class="wl">Фінансовий check-up</span><span class="sm b">'+okc+' з 4 у нормі</span></div></div>';
     } else {
-      var tp=balance()-S.debtFree;
-      h+='<div class="w click" data-go="tochka"><div class="row"><span class="wl">Фінансова точка А</span><span class="lock" style="background:var(--card);color:var(--ink2)">FREE</span></div><span class="mid">'+money(tp)+'</span><span class="xs mut">рахунки '+money(balance())+' − борги '+money(S.debtFree)+'</span></div>';
+      var cg=S.goals[0];
+      h+='<div class="w click" data-go="paywall" style="background:#FFFBF2;border-color:#E6D2A8"><div class="row"><span class="b sm">Коли ви дійдете до '+money(cg.target)+'?</span><span class="lock">'+ic("lock",2)+' Premium</span></div><span class="xs mut">Прогноз цілей, план виходу з боргів і check-up — у Premium</span></div>';
       h+=lockedCard("План на місяць і бюджет",planInner);
     }
     h+='<div class="rowb"><span class="h3">Останні операції</span><button class="link" data-go="ops" data-tab="1">Всі ›</button></div><div class="w" style="padding:.25em 1em">'+recent.map(opRow).join("")+'</div>';
     return h;
   };
+
+  function forecastCard(){
+    return '<div class="w click" data-go="goals"><span class="wl">Коли ви дійдете до мети</span>'+S.goals.map(function(g){
+      var have=goalHave(g), rem=g.target-have, m=monthsTo(rem,goalMonthly(g)), p=Math.min(pct(have,g.target),100);
+      return '<div class="row"><span class="sm">'+esc(g.n)+'</span><span class="sm b">'+(rem<=0?"досягнуто":(m===null?"—":"≈ "+monthName(m)))+'</span></div><div class="trk"><i style="width:'+p+'%"></i></div>';
+    }).join("")+'<span class="xs mut">«Капітал» — у темпі середніх накопичень '+money(avgSav())+' на місяць за 6 місяців</span></div>';
+  }
 
   V.ops=function(){
     var f=param||"all", q=(V._q||"").toLowerCase();
@@ -525,7 +577,7 @@
     var h='';
     S.goals.forEach(function(g){
       var have=goalHave(g), p=pct(have,g.target), rem=g.target-have;
-      var mon=g.auto?(income()-expense()):g.monthly, m=monthsTo(rem,mon);
+      var mon=goalMonthly(g), m=monthsTo(rem,mon);
       var fc = rem<=0 ? '<span class="xs pos b">досягнуто</span>' : (m===null?'<span class="xs mut">прогноз: немає внесків</span>':'<span class="xs mut">прогноз: '+monthName(m)+' при '+money(mon)+' на місяць</span>');
       h+='<div class="goal" data-go="goal" data-p="'+g.id+'"><div class="img" style="background:'+g.g+'"></div><div style="display:flex;flex-direction:column;gap:.28em"><div class="row"><span class="b" style="font-size:.84em">'+esc(g.n)+'</span><span class="sm b">'+Math.min(p,100)+'%</span></div><span class="xs mut">'+money(have)+' / '+money(g.target)+'</span><div class="trk"><i style="width:'+Math.min(p,100)+'%"></i></div>'+(g.auto?'<span class="auto">↻ береться з чистого капіталу</span>':fc)+'</div></div>';
     });
@@ -541,11 +593,11 @@
   V.goal=function(){
     var g=S.goals.filter(function(x){return x.id===param;})[0]; if(!g) return V.goals();
     var have=goalHave(g), p=pct(have,g.target), rem=Math.max(0,g.target-have);
-    var mon=g.auto?(income()-expense()):g.monthly, m=monthsTo(rem,mon);
+    var mon=goalMonthly(g), m=monthsTo(rem,mon);
     var h='<div class="w" style="overflow:hidden;padding:0"><div style="height:8em;background:'+g.g+'"></div><div style="padding:1em;display:flex;flex-direction:column;gap:.45em"><span class="h3">'+esc(g.n)+'</span><span class="big">'+money(have)+'</span><span class="sm mut">із '+money(g.target)+' · '+Math.min(p,100)+'%</span><div class="trk"><i style="width:'+Math.min(p,100)+'%"></i></div></div></div>';
     h+='<div class="k2"><div class="w"><span class="xs mut">Лишилось</span><span class="mid">'+money(rem)+'</span></div><div class="w"><span class="xs mut">Прогноз</span><span class="mid" style="font-size:.9em">'+(rem<=0?"досягнуто":(m===null?"—":monthName(m)))+'</span></div></div>';
     if(g.auto){
-      h+='<div class="w tint"><span class="auto">↻ автоматично</span><span class="sm">Прогрес = ваш чистий капітал. Внесли витрату — він зменшився, і ціль теж. Окремо поповнювати не треба.</span><span class="xs mut">Прогноз рахує поточні накопичення '+money(mon)+' на місяць: '+money(rem)+' ÷ '+money(mon)+' ≈ '+(m===null?"—":m+" міс.")+'</span></div>';
+      h+='<div class="w tint"><span class="auto">↻ автоматично</span><span class="sm">Прогрес = ваш чистий капітал. Внесли витрату — він зменшився, і ціль теж. Окремо поповнювати не треба.</span><span class="xs mut">Прогноз рахує середні накопичення за 6 місяців — '+money(mon)+' на місяць: '+money(rem)+' ÷ '+money(mon)+' ≈ '+(m===null?"—":m+" міс.")+'</span></div>';
     } else {
       h+='<div class="w"><span class="wl">Щомісячний внесок</span><div class="row"><button class="btn q" style="width:3em" data-act="gm" data-d="-5000" aria-label="Менше">−</button><span class="mid">'+money(g.monthly)+'</span><button class="btn q" style="width:3em" data-act="gm" data-d="5000" aria-label="Більше">+</button></div><span class="xs mut">'+money(rem)+' ÷ '+money(g.monthly)+' = '+(m===null?"—":m+" міс.")+'</span></div>';
       h+='<button class="btn" data-act="topup">Поповнити ціль на '+money(g.monthly)+'</button>';
@@ -556,17 +608,18 @@
 
   V.more=function(){
     var items=[
-      ["tochka","point","Фінансова точка А","де ви зараз",false],
+      ["qz","point","Фінансова точка А","пройти заново",false],
+      ["debts","scale","План виходу з боргів","порядок і дата",true],
       ["analytics","chart","Розширена аналітика","структура й динаміка витрат",true],
-      ["assets","scale","Активи та зобовʼязання","чистий капітал",true],
+      ["assets","scale","Активи та зобовʼязання","чистий капітал",false],
       ["plan","cal","Фінплан на рік","план / факт по місяцях",true],
       ["ai","spark","AI-асистент","питання про ваші гроші",true],
       ["banks","bank","Підключення банків","автоімпорт операцій",true],
-      ["checkup","shield","Фінансовий check-up","розбір з експертом",true],
+      ["checkup","shield","Фінансовий check-up","автозвіт · розбір з експертом",true],
       ["profile","user","Профіль і налаштування","підписка, безпека, мова",false]
     ];
     var h='';
-    if(!S.premium) h+='<div class="w click" data-go="paywall" style="background:radial-gradient(circle at 88% 0%,#3A2F9E 0%,#141216 55%,#0B0B0D 100%);border:0;color:#F5F2EC"><div class="row"><span style="font-family:var(--serif);font-size:1.35em;font-weight:600;color:#F5F2EC">Money Mind Premium</span><span class="lock" style="background:rgba(214,184,120,.16);color:#D6B878">'+ic("star",2)+' $20</span></div><span class="xs" style="color:#A7A5A5">Банки, бюджет, цілі, чистий капітал, AI — 7 днів безкоштовно</span></div>';
+    if(!S.premium) h+='<div class="w click" data-go="paywall" style="background:radial-gradient(circle at 88% 0%,#3A2F9E 0%,#141216 55%,#0B0B0D 100%);border:0;color:#F5F2EC"><div class="row"><span style="font-family:var(--serif);font-size:1.35em;font-weight:600;color:#F5F2EC">Money Mind Premium</span><span class="lock" style="background:rgba(214,184,120,.16);color:#D6B878">'+ic("star",2)+' від $20</span></div><span class="xs" style="color:#A7A5A5">Прогноз цілей, план боргів, check-up, банки — 7 днів безкоштовно</span></div>';
     h+='<div class="w" style="padding:.2em 1em">'+items.map(function(x){
       var lk=x[4]&&!S.premium;
       return '<div class="mi" data-go="'+x[0]+'"><span class="ic" style="background:var(--card);color:var(--ink)">'+ic(x[1])+'</span><div><div class="n">'+x[2]+'</div><div class="s">'+x[3]+'</div></div>'+(lk?'<span class="lock">'+ic("lock",2)+'</span>':'<span class="chev">'+ic("chev")+'</span>')+'</div>';
@@ -574,16 +627,7 @@
     return h;
   };
 
-  V.tochka=function(){
-    var tp=balance()-S.debtFree;
-    var h='<div class="w"><span class="wl">Ваша точка А на 26 вересня 2026</span><span class="big">'+money(tp)+'</span><span class="xs mut">що є на рахунках мінус борги</span></div>';
-    h+='<div class="w" style="padding:.25em 1em">'+S.accounts.map(function(a){return '<div class="li"><span class="ic" style="background:var(--card);color:var(--ink)">'+ic("bank")+'</span><div><div class="n">'+esc(a.n)+'</div><div class="s">'+esc(a.k)+'</div></div><span class="v">'+money(a.bal)+'</span></div>';}).join("")
-      +'<div class="li"><span class="ic" style="background:var(--neg-bg);color:var(--neg)">'+ic("scale")+'</span><div><div class="n">Борги разом</div><div class="s">одним числом</div></div><span class="v neg">−'+money(S.debtFree)+'</span></div></div>';
-    h+='<button class="btn q" data-act="addacc">+ Додати рахунок ('+S.accounts.length+' з '+(S.premium?"∞":FREE_ACC_LIMIT)+')</button>';
-    if(!S.premium) h+='<div class="w tint click" data-go="paywall"><span class="lock">'+ic("lock",2)+' Premium</span><span class="sm"><b>Повний чистий капітал</b> — з нерухомістю, авто, інвестиціями й кожним боргом окремо, з історією і звʼязком із ціллю «Капітал».</span></div>';
-    else h+='<button class="btn" data-go="assets">Відкрити повний чистий капітал</button>';
-    return h;
-  };
+  V.tochka=function(){ return V.assets(); };
 
   V.analytics=function(){
     var exp=expense(), data=CAT_ORDER.map(function(c){return {c:c,v:spentBy(c)};}).filter(function(x){return x.v>0;}).sort(function(a,b){return b.v-a.v;});
@@ -612,6 +656,16 @@
     } else {
       h+='<div class="w" style="padding:.25em 1em">'+S.liabs.map(function(a){return '<div class="li"><span class="ic" style="background:var(--neg-bg);color:var(--neg)">'+ic("scale")+'</span><div><div class="n">'+esc(a.n)+'</div><div class="s">вручну</div></div><span class="v neg">'+money(a.v)+'</span></div>';}).join("")+'</div>';
     }
+    return h;
+  };
+
+  V.debts=function(){
+    var dp=debtPlan();
+    var h='<div class="w"><span class="wl">Без боргів</span><span class="big">'+(dp.months===null?'—':monthName(dp.months))+'</span><span class="xs mut">'+(dp.months===null?'Задайте щомісячний платіж хоча б для одного боргу':'Усього боргів '+money(liabsTotal())+' ÷ платежі '+money(dp.total)+' на місяць ≈ '+dp.months+' міс.')+'</span></div>';
+    h+='<div class="w" style="padding:.3em 1em">'+dp.order.map(function(d,k){
+      return '<div class="li" style="grid-template-columns:1.8em 1fr auto"><span class="b sm">'+(k+1)+'</span><div><div class="n">'+esc(d.n)+'</div><div class="s">'+money(d.b)+(d.m?' · закрито ≈ '+monthName(d.m):'')+'</div></div><div class="row" style="gap:.3em"><button class="btn q" style="width:2.3em;padding:.45em 0" data-act="dpay" data-i="'+d.i+'" data-d="-5000" aria-label="Менше">−</button><span class="sm b" style="min-width:3.6em;text-align:center">'+money(d.p)+'</span><button class="btn q" style="width:2.3em;padding:.45em 0" data-act="dpay" data-i="'+d.i+'" data-d="5000" aria-label="Більше">+</button></div></div>';
+    }).join("")+'</div>';
+    h+='<p class="note">Порядок — від найменшого залишку («сніжний ком»): кожен закритий борг звільняє платіж для наступного. Відсотки не враховано — дата орієнтовна. Кредитів ми не видаємо й не радимо.</p>';
     return h;
   };
 
@@ -666,6 +720,9 @@
   };
 
   V.checkup=function(){
+    var mt=metrics();
+    var rep='<div class="w"><span class="wl">Автоматичний звіт · вересень 2026</span>'+mt.map(function(x){return '<div class="mt"><div class="row"><span class="sm">'+x.n+'</span><b class="'+x.s+'">'+x.v+'</b></div><span class="xs mut">'+x.d+'</span></div>';}).join("")+'<span class="xs mut">Пороги — орієнтир, не норматив.</span></div>';
+    if(!S.expert) return rep+'<div class="w tint click" data-go="paywall"><span class="b sm">Розібрати з експертом</span><span class="xs mut">Засновниця чи експерт перегляне звіт, цілі й план і дасть рекомендації. Тариф «Premium + Експерт».</span><span class="sm b" style="color:var(--teal)">Обрати тариф з експертом ›</span></div>';
     if(S.checkup){
       return '<div class="w" style="align-items:center;text-align:center;padding:1.6em 1em"><span class="ic" style="background:var(--pos-bg);color:var(--pos);width:3.2em;height:3.2em;border-radius:50%">'+ic("check",2.2)+'</span><span class="h3">Заявку прийнято</span><span class="sm mut">Експерт підтвердить час протягом доби. Доступ до даних закриється сам <b>'+S.checkup.until+'</b>.</span></div>'
         +'<div class="w"><span class="wl">Ви дали доступ до</span>'+S.checkup.what.map(function(x){return '<span class="sm">✓ '+x+'</span>';}).join("")+'</div>'
@@ -674,7 +731,7 @@
     var c=V._ck||{goals:true,budget:true,plan:true,ops:false,days:7};
     V._ck=c;
     var until=c.days===7?"3 жовтня 2026":c.days===14?"10 жовтня 2026":"26 жовтня 2026";
-    var h='<div class="w tint"><span class="b sm">Що входить</span><span class="xs mut">Експерт переглядає ваші цілі, бюджет і річний план, і за 60 хвилин дає рекомендації. Вони лягають у ваш план.</span></div>';
+    var h=rep+'<div class="w tint"><span class="b sm">Розбір з експертом</span><span class="xs mut">Експерт переглядає ваші цілі, бюджет і річний план, і за 60 хвилин дає рекомендації. Вони лягають у ваш план.</span></div>';
     h+='<div class="w" style="padding:.3em 1em"><span class="wl" style="padding-top:.5em">До чого дати доступ</span>'
       +[["goals","Цілі"],["budget","Бюджет"],["plan","Фінплан на рік"],["ops","Окремі операції й суми"]].map(function(x){return '<div class="toggle"><span class="sm">'+x[1]+'</span><button class="sw" role="switch" aria-checked="'+(!!c[x[0]])+'" data-act="ckt" data-k="'+x[0]+'" aria-label="'+x[1]+'"></button></div>';}).join("")+'</div>';
     h+='<div class="w"><span class="wl">Доступ закриється сам</span><div class="chips">'+[[7,"через 7 днів"],[14,"через 14 днів"],[30,"через 30 днів"]].map(function(x){return '<button class="chip '+(c.days===x[0]?"on":"")+'" data-act="ckd" data-v="'+x[0]+'">'+x[1]+'</button>';}).join("")+'</div><span class="xs mut">'+until+'</span></div>';
@@ -686,7 +743,7 @@
 
   V.profile=function(){
     var nb=Object.keys(S.banks).filter(function(k){return S.banks[k]===true;}).length;
-    var rows=[["star","Підписка",S.premium?"Money Mind Premium":"FREE"],["bank","Підключені банки",nb+" "+(nb===1?"банк":"банки")],["shield","Безпека","PIN і біометрія"],["user","Особисті дані",""],["cal","Сповіщення",""],["list","Мова","Українська"]];
+    var rows=[["star","Підписка",S.expert?"Premium + Експерт":(S.premium?"Money Mind Premium":"FREE")],["bank","Підключені банки",nb+" "+(nb===1?"банк":"банки")],["shield","Безпека","PIN і біометрія"],["user","Особисті дані",""],["cal","Сповіщення",""],["list","Мова","Українська"]];
     var h='<div class="w"><div class="row" style="justify-content:flex-start;gap:.8em"><span class="ava" style="width:3.4em;height:3.4em;font-size:1.2em">О</span><div><div class="h3">Олена</div><div class="xs mut">приклад облікового запису</div></div></div></div>';
     h+='<div class="w" style="padding:.2em 1em">'+rows.map(function(r,i){return '<div class="mi" '+(i===0?'data-go="'+(S.premium?"profile":"paywall")+'"':(i===1?'data-go="banks"':'data-act="toast" data-m="Окремий екран — наступним проходом"'))+'><span class="ic" style="background:var(--card);color:var(--ink)">'+ic(r[0])+'</span><div><div class="n">'+r[1]+'</div></div><span class="xs mut">'+r[2]+'</span></div>';}).join("")+'</div>';
     if(S.premium) h+='<button class="btn q" data-act="cancelprem">Скасувати Premium (дані лишаться)</button>';
@@ -697,10 +754,37 @@
 
   /* Premium-пейвол і вхід мають власну повноекранну розкладку */
   function renderPaywall(){
-    return '<div class="pw"><div class="glow"><span class="lg">MONEY MIND<br>PREMIUM</span></div><span class="pr">$20<small> / місяць</small></span><ul>'+PREMIUM_LIST.map(function(x){return '<li><i>'+ic("check",2.4)+'</i><span>'+x+'</span></li>';}).join("")+'</ul><button class="btn gold" data-act="trial">Спробувати 7 днів безкоштовно</button><p class="fine">Потім $20 на місяць. Скасувати можна будь-коли — ваші записи лишаються.<br>Демо: оплати немає, кнопка лише вмикає тариф.</p></div>';
+    return '<div class="pw"><div class="glow"><span class="lg">MONEY MIND<br>PREMIUM</span></div><ul>'+PREMIUM_LIST.map(function(x){return '<li><i>'+ic("check",2.4)+'</i><span>'+x+'</span></li>';}).join("")+'</ul>'
+      +'<div class="tr"><div class="tt"><span>Premium</span><span>$20 / міс</span></div><span class="td">Усе зі списку вище</span>'+(S.premium&&!S.expert?'<span class="td" style="color:#D6B878">Ваш тариф</span>':(S.expert?'':'<button class="btn gold" data-act="trial">Спробувати 7 днів безкоштовно</button>'))+'</div>'
+      +'<div class="tr x"><div class="tt"><span>Premium + Експерт</span><span>$49,99 / міс</span></div><span class="td">Усе з Premium + розбір check-up із засновницею чи експертом + особистий план на рік</span>'+(S.expert?'<span class="td" style="color:#D6B878">Ваш тариф</span>':'<button class="btn o2" data-act="trialx">Обрати з експертом</button>')+'</div>'
+      +'<p class="fine">FREE лишається назавжди, без картки. Нагадаємо за 2 дні до кінця пробного періоду. Скасувати можна будь-коли — записи лишаються.<br>Ціна Premium ще не остаточна. Демо: оплати немає, кнопки лише вмикають тариф.</p></div>';
   }
   function renderOnb(){
-    return '<div class="onb"><div><div class="lg">MONEY MIND</div><div class="tg">ФІНАНСОВА КУЛЬТУРА ТВОГО ЖИТТЯ</div></div><div style="display:flex;flex-direction:column;gap:.7em"><button class="btn" data-act="enter">Створити акаунт</button><button class="btn o" data-act="enter">Увійти</button><p class="fine">Продовжуючи, ви погоджуєтесь з Умовами та Політикою конфіденційності.<br>У вашому макеті тут фото — його замінено тлом.</p></div></div>';
+    var cg=S.goals[0], m=monthsTo(cg.target-goalHave(cg),avgSav());
+    return '<div class="wel"><div class="row"><span class="b" style="font-size:1.05em">Money Mind</span><button class="link" data-act="enter">Увійти</button></div>'
+      +'<div class="vid"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg></span><span class="xs b">Звернення засновниці · [фото й відео — заглушка]</span></div>'
+      +'<div class="h1w">Скільки у вас насправді — і коли ви дійдете до мети</div>'
+      +'<span class="sm mut">Усі картки й валюти, активи й борги — в одній цифрі. Український продукт.</span>'
+      +'<div class="w"><div class="row"><span class="xs mut">Приклад · чистий капітал</span><span class="lock" style="background:var(--card);color:var(--ink2)">Приклад</span></div><span class="mid">'+money(netWorth())+'</span><span class="xs mut">Ціль «Капітал '+money(cg.target)+'» — ≈ '+(m===null?"—":monthName(m))+'</span></div>'
+      +'<button class="btn" data-act="qstart">Порахувати мою Точку А — безкоштовно</button>'
+      +'<p class="fine">FREE назавжди, без картки · Ми не приймаємо й не рухаємо ваші гроші</p>'
+      +'<span class="h3" style="margin-top:.4em">Тарифи</span><div class="tiers">'
+      +'<div class="tier"><div class="tt"><span>FREE</span><span>$0</span></div><span class="td">Ручний облік, валюти, категорії · «Точка А» і чистий капітал · цілі без прогнозу</span></div>'
+      +'<div class="tier pd"><div class="tt"><span style="color:#D6B878">PREMIUM</span><span>$20 / міс</span></div><span class="td">Прогноз цілей, план виходу з боргів, автоматичний check-up, банки, бюджет, ПК</span></div>'
+      +'<div class="tier px"><div class="tt"><span>PREMIUM + ЕКСПЕРТ</span><span>$49,99 / міс</span></div><span class="td">Усе з Premium + розбір check-up із засновницею чи експертом</span></div>'
+      +'</div><p class="fine">Ціна Premium ще не остаточна.</p></div>';
+  }
+  function renderQuiz(){
+    var st=V._qs||0, T=["Гроші на рахунках","Що у вас є, крім грошей?","Ваші борги","Ваша Точка А"];
+    var h='<div class="wel"><div class="row"><button class="link" data-act="qback">‹ Назад</button><span class="xs mut">Точка А · крок '+(st+1)+' з 4</span></div><div class="trk"><i style="width:'+((st+1)*25)+'%"></i></div><div class="h1w">'+T[st]+'</div>';
+    function rows(list,key,field){ return list.map(function(x,i){ var id="q_"+key+"_"+i; return '<div class="qrow"><label for="'+id+'">'+esc(x.n)+'</label><input id="'+id+'" inputmode="numeric" data-qk="'+key+'" data-qi="'+i+'" value="'+Math.round(x[field]/100)+'" aria-label="'+esc(x.n)+', доларів"></div>'; }).join(""); }
+    if(st===0) h+=rows(S.accounts,"acc","bal")+'<span class="xs mut">Приблизно — нормально. Суми в доларах; валюту кожного рахунку можна змінити пізніше.</span>';
+    if(st===1) h+=rows(S.assets,"as","v")+'<span class="xs mut">Нерухомість, авто, інвестиції — за оцінкою. Приблизно — нормально.</span>';
+    if(st===2) h+=rows(S.liabs,"li","v")+'<span class="xs mut">Кредити, картки, позики друзям і родині.</span>';
+    if(st<3) return h+'<button class="btn" data-act="qnext">Далі</button><p class="fine">Реєстрація — після результату</p></div>';
+    return h+'<div class="w nw"><span class="wl">Чистий капітал</span><span class="big" style="color:#fff">'+money(netWorth())+'</span><span class="xs" style="color:var(--nw-sub)">активи '+money(assetsTotal())+' − борги '+money(liabsTotal())+'</span></div>'
+      +'<span class="sm mut">Це ваша точка відліку. Далі застосунок покаже, як вона змінюється щомісяця.</span>'
+      +'<button class="btn" data-act="enter">Створити акаунт — безкоштовно</button><p class="fine">FREE назавжди, без картки · Демо: реєстрацію імітовано</p></div>';
   }
 
   /* ── рендер ── */
@@ -708,13 +792,14 @@
   function render(){
     var s=S.screen;
     sc.classList.toggle("dark", s==="paywall");
-    sc.classList.toggle("prem", !!S.premium && s!=="onb" && s!=="paywall");
-    var darkNow = s==="paywall" || (!!S.premium && s!=="onb");
+    var full = s==="onb" || s==="qz";
+    sc.classList.toggle("prem", !!S.premium && !full && s!=="paywall");
+    var darkNow = s==="paywall" || (!!S.premium && !full);
     document.documentElement.classList.toggle("is-prem", darkNow);
     var tc=document.querySelector('meta[name="theme-color"]'); if(tc) tc.setAttribute("content", darkNow?"#0B0B0D":"#FCF7F0");
-    if(s==="onb"){
+    if(full){
       top.innerHTML=""; top.style.display="none"; tab.style.display="none"; fabwrap.innerHTML="";
-      bd.style.padding="0"; bd.innerHTML=renderOnb(); syncModes(); return;
+      bd.style.padding="0"; bd.innerHTML = s==="onb" ? renderOnb() : renderQuiz(); syncModes(); return;
     }
     top.style.display="flex"; bd.style.padding="";
     var isTab=TABS.some(function(t){return t[0]===s;});
@@ -791,6 +876,7 @@
     var g=el.getAttribute("data-go");
     if(g){
       var p=el.getAttribute("data-p");
+      if(g==="qz") V._qs=0;
       if(el.getAttribute("data-tab")) { V._q=""; go(g,p,{tab:true}); }
       else go(g,p);
       return;
@@ -870,7 +956,14 @@
           else { var prev=S.stack.pop(); S.screen = prev&&prev.s!=="paywall" ? prev.s : "home"; param=prev?prev.p:null; }
           setTimeout(function(){ toast("Premium увімкнено · 7 днів безкоштовно",true); },900);
         }); break;
-      case "cancelprem": switchTier(false,function(){ S.stack=[]; S.screen="home"; setTimeout(function(){ toast("Повернулись на FREE · записи на місці"); },900); }); break;
+      case "trialx":
+        if(S.premium){ S.expert=true; var pv=S.stack.pop(); S.screen = pv&&pv.s!=="paywall" ? pv.s : "home"; param=pv?pv.p:null; render(); save(); toast("Тариф «Premium + Експерт» увімкнено",true); break; }
+        switchTier(true,function(){ S.expert=true; var pv2=S.stack.pop(); S.screen = pv2&&pv2.s!=="paywall" ? pv2.s : "home"; param=pv2?pv2.p:null; setTimeout(function(){ toast("«Premium + Експерт» · 7 днів безкоштовно",true); },900); }); break;
+      case "qstart": V._qs=0; S.stack=[]; S.screen="qz"; render(); save(); bd.scrollTop=0; break;
+      case "qnext": V._qs=Math.min(3,(V._qs||0)+1); render(); bd.scrollTop=0; break;
+      case "qback": if((V._qs||0)===0){ S.screen="onb"; render(); save(); } else { V._qs--; render(); } bd.scrollTop=0; break;
+      case "dpay": var li=S.liabs[+el.getAttribute("data-i")]; li.pay=Math.max(0,(li.pay||0)+(+el.getAttribute("data-d"))); render(); save(); break;
+      case "cancelprem": switchTier(false,function(){ S.expert=false; S.stack=[]; S.screen="home"; setTimeout(function(){ toast("Повернулись на FREE · записи на місці"); },900); }); break;
       case "logout": S.stack=[]; S.screen="onb"; render(); save(); break;
       case "enter": S.stack=[]; S.screen="home"; render(); save(); break;
       case "resetdemo": S=seed(); V._q=""; V._at="a"; V._ck=null; param=null; try{localStorage.removeItem(STORE);}catch(e){} render(); toast("Усе повернуто до прикладу"); break;
@@ -879,12 +972,19 @@
   });
 
   function syncModes(){}
+  document.addEventListener("input",function(e){
+    var t=e.target, k=t.getAttribute&&t.getAttribute("data-qk"); if(!k) return;
+    var i=+t.getAttribute("data-qi"), v=parseInt(String(t.value).replace(/\D/g,""),10); v=isNaN(v)?0:v*100;
+    if(k==="acc") S.accounts[i].bal=v; else if(k==="as") S.assets[i].v=v; else if(k==="li") S.liabs[i].v=v;
+    save();
+  });
   document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&sheet.classList.contains("show")){closeSheet();} });
 
-  load(); if(S.screen==="paywall"||S.screen==="goal"){S.screen="home";S.stack=[];} param=null; render();
+  load(); S.screen="onb"; S.stack=[]; param=null; render(); /* продажний екран — щоразу до входу (рішення власника) */
   
 })();
 </script>
+
 
 </body>
 </html>
