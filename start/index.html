@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Money Mind</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0E0C10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Money Mind">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="../favicon.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@400;500;600&display=swap">
+<link rel="preload" as="image" href="founder-poster.jpg">
+<style>
+  /* Макет намальований на 390 px ширини; сцена масштабується під ширину телефона,
+     а висоту бере реальну — відео стискається, щоб низ екрана завжди влазив. */
+  :root{--gold:#D6B878;--ink:#F3EDE4;--mut:#B3A99E;--bg:#0E0C10;--line:#2E2A30}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+  #stage{position:fixed;top:0;left:0;width:390px;height:844px;transform-origin:0 0;color:var(--ink);font-family:Manrope,system-ui,-apple-system,sans-serif;--v:440px}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer}
+
+  .hero{position:absolute;left:0;top:0;width:390px;height:var(--v);border-radius:0 0 36px 36px;overflow:hidden;background:#1A161B}
+  .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+  .scrim{position:absolute;left:0;top:0;width:100%;height:140px;background:linear-gradient(180deg,rgba(14,12,16,.72),rgba(14,12,16,0))}
+  .top{position:absolute;left:24px;right:24px;top:calc(max(env(safe-area-inset-top),20px) + 6px);display:flex;justify-content:space-between;align-items:center}
+  .brand{font-family:"Tenor Sans",sans-serif;font-size:14px;letter-spacing:.32em;color:var(--gold)}
+  .login{font-size:15px;font-weight:600;padding:12px 0}
+  .hero video.fullv{object-position:57% 28%;opacity:0;transition:opacity .35s}
+  .hero.on video.fullv{opacity:1}
+  .snd{position:absolute;right:16px;top:calc(var(--v) - 136px);height:46px;padding:0 16px 0 13px;border-radius:23px;border:1px solid rgba(214,184,120,.85);background:rgba(14,12,16,.5);color:var(--gold);display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  .snd svg{flex:0 0 auto}
+  .snd .ic{display:none}.snd[data-s="teaser"] .i-mute,.snd[data-s="play"] .i-pause,.snd[data-s="pause"] .i-play,.snd[data-s="wait"] .i-wait{display:block}
+  .snd[data-s="wait"] .i-wait{animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--gold);opacity:0;transition:opacity .3s}
+  .hero.on .bar{opacity:1}
+
+  .st{position:absolute;width:118px;height:146px;border-radius:22px;background:rgba(31,28,34,.92);border:1px solid var(--gold);padding:16px;box-shadow:0 16px 32px rgba(0,0,0,.55);display:flex;flex-direction:column;justify-content:space-between}
+  .st span{font-family:"Tenor Sans",sans-serif;font-size:15px}
+  .s1{left:20px;top:calc(var(--v) - 64px);transform:rotate(-6deg)}
+  .s2{left:136px;top:calc(var(--v) - 42px);width:124px;padding:14px 16px 16px;transform:rotate(4deg)}
+  .s3{left:254px;top:calc(var(--v) - 68px);transform:rotate(-3deg)}
+  .chip{position:absolute;left:258px;top:calc(var(--v) + 94px);transform:rotate(-5deg);background:var(--gold);color:#141216;border-radius:12px;padding:7px 12px;font-family:"Tenor Sans",sans-serif;font-size:13px}
+
+  .bottom{position:absolute;left:20px;right:20px;bottom:0;padding-bottom:calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
+  h1{margin:0 4px;font-family:"Tenor Sans",sans-serif;font-weight:400;font-size:28px;line-height:1.08;letter-spacing:-.01em}
+  h1 em{font-style:normal;color:var(--gold)}
+  .tiers{margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .tiers div{padding:8px 0;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .tiers div+div{border-left:1px solid var(--line)}
+  .tiers b{font-weight:400;font-size:11px;letter-spacing:.16em;color:var(--mut)}
+  .tiers .pr b{color:var(--gold)}
+  .tiers i{font-style:normal;font-family:"Tenor Sans",sans-serif;font-size:16px}
+  .cta{margin-top:20px;height:58px;border-radius:29px;background:var(--gold);color:#141216;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+  .cta:active{filter:brightness(.92)}
+  .free{margin-top:8px;height:44px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mut);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(179,169,158,.5)}
+
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="hero">
+    <video id="loop" src="founder-loop.mp4" poster="founder-poster.jpg" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    <video id="full" class="fullv" preload="none" playsinline aria-label="Відеозвернення засновниці"></video>
+    <div class="bar" id="bar"></div>
+    <div class="scrim"></div>
+    <div class="top">
+      <span class="brand">MONEY MIND</span>
+      <a class="login" href="../">Увійти</a>
+    </div>
+  </div>
+  <button class="snd" id="snd" data-s="teaser" aria-label="Увімкнути звук і дивитися звернення">
+    <svg class="ic i-mute" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6"/></svg>
+    <svg class="ic i-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+    <svg class="ic i-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+    <svg class="ic i-wait" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/></svg>
+    <span id="sndt">Звук</span>
+  </button>
+
+  <div class="st s1">
+    <svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="#D6B878" stroke-width="2.6" stroke-linejoin="round" aria-hidden="true"><path d="M8 30 32 10l24 20"/><path d="M14 26v28h36V26"/><path d="M27 54V40h10v14"/></svg>
+    <span>Капітал</span>
+  </div>
+  <div class="st s2">
+    <svg viewBox="0 0 100 80" width="88" height="70" aria-hidden="true">
+      <path d="M50 79 C51 63 54 45 57.5 27 L61 28 C58 46 56 63 55.5 79 Z" fill="#D6B878"/>
+      <g fill="#D6B878">
+        <path d="M58 24 C70 13 87 17 95 41 C84 27 72 24 58 28 Z"/>
+        <path d="M58 24 C46 13 29 17 21 41 C32 27 44 24 58 28 Z"/>
+        <path d="M58 24 C66 9 81 5 92 12 C79 10 68 15 58 27 Z"/>
+        <path d="M58 24 C50 9 35 5 24 12 C37 10 48 15 58 27 Z"/>
+        <path d="M58 26 C75 24 85 37 85 58 C80 41 71 32 58 29 Z"/>
+        <path d="M58 26 C41 24 31 37 31 58 C36 41 45 32 58 29 Z"/>
+        <path d="M56.5 25 C55.5 14 58.5 6 64 1 C62 9 61 16 60 25 Z"/>
+      </g>
+      <circle cx="56.5" cy="30" r="2.4" fill="#A88A52"/><circle cx="60.5" cy="30.6" r="2.4" fill="#A88A52"/>
+    </svg>
+    <span>Цілі</span>
+  </div>
+  <div class="st s3">
+    <svg viewBox="0 0 72 56" width="54" height="42" fill="none" stroke-width="2.6" aria-hidden="true"><rect x="6" y="10" width="60" height="38" rx="6" stroke="#D6B878"/><path d="M6 20h60" stroke="#D6B878"/><path d="M4 52 68 4" stroke="#E07A84" stroke-linecap="round"/></svg>
+    <span>Без боргів</span>
+  </div>
+  <span class="chip">+ ваша мрія</span>
+
+  <div class="bottom">
+    <h1>Дізнайтеся дату<br><em>своєї мрії</em></h1>
+    <div class="tiers">
+      <div><b>FREE</b><i>$0</i></div>
+      <div class="pr"><b>PREMIUM</b><i>$20</i></div>
+      <div><b>+ ЕКСПЕРТ</b><i>$49,99</i></div>
+    </div>
+    <a class="cta" href="../">Почати з Premium
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a class="free" href="../">Почати безкоштовно</a>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  var stage=document.getElementById("stage");
+  function fit(){
+    var vw=window.innerWidth, vh=window.innerHeight;
+    var W=Math.min(vw,440), s=W/390, H=vh/s;
+    /* низ (слоган, тарифи, кнопки) займає 278 px, стікери — 128 px під краєм відео */
+    var v=Math.max(250,Math.min(440,H-406));
+    stage.style.transform="scale("+s+")";
+    stage.style.left=((vw-W)/2)+"px";
+    stage.style.height=H+"px";
+    stage.style.setProperty("--v",v+"px");
+  }
+  fit();
+  window.addEventListener("resize",fit);
+  window.addEventListener("orientationchange",function(){setTimeout(fit,200);});
+
+  /* Звук браузер вмикає лише після дотику людини: до того грає беззвучний шматок,
+     дотик до кнопки чи відео запускає повне звернення зі звуком тут же, на екрані. */
+  var hero=document.querySelector(".hero"), loop=document.getElementById("loop"), full=document.getElementById("full");
+  var btn=document.getElementById("snd"), txt=document.getElementById("sndt"), bar=document.getElementById("bar");
+  var FULL_SRC="https://vz-8f9830f2-b7e.b-cdn.net/c594cae8-8567-4ea4-87ff-02619fb2d3cb/play_720p.mp4";
+  var LABEL={teaser:"Звук",play:"Пауза",pause:"Далі",wait:"Зачекайте"};
+  function set(st){ btn.setAttribute("data-s",st); txt.textContent=LABEL[st]; }
+  var p=loop.play(); if(p&&p.catch) p.catch(function(){});
+  full.poster="founder-poster.jpg";
+
+  function start(){
+    if(!full.src) full.src=FULL_SRC;
+    full.muted=false; full.currentTime=0;
+    hero.classList.add("on"); set("wait");
+    var pr=full.play(); if(pr&&pr.catch) pr.catch(function(){ set("pause"); });
+    loop.pause();
+  }
+  function toggle(){
+    var st=btn.getAttribute("data-s");
+    if(st==="teaser") return start();
+    if(full.paused){ full.play().catch(function(){}); } else { full.pause(); }
+  }
+  btn.addEventListener("click",toggle);
+  hero.addEventListener("click",function(e){ if(e.target.closest("a")) return; toggle(); });
+  full.addEventListener("playing",function(){ set("play"); });
+  full.addEventListener("waiting",function(){ set("wait"); });
+  full.addEventListener("pause",function(){ if(!full.ended) set("pause"); });
+  full.addEventListener("timeupdate",function(){ if(full.duration) bar.style.width=(full.currentTime/full.duration*100)+"%"; });
+  full.addEventListener("ended",function(){
+    hero.classList.remove("on"); set("teaser"); bar.style.width="0";
+    loop.play().catch(function(){});
+  });
+})();
+</script>
+</body>
+</html>
